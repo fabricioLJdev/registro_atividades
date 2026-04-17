@@ -4,6 +4,15 @@
 
 NOME_ARQUIVO = "atividade.txt"
 
+# adicionar atividade
+def adicionar_atividade():
+    atividade = input("Digite a atividade que deseja adicionar: ")
+
+    with open(NOME_ARQUIVO, "a") as arquivo:
+        arquivo.write(atividade + "\n")
+
+        print("Atividade foi adicionada")
+
 def menu_principal():
     while True:
         print("=== Menu Principal ===")
@@ -16,7 +25,7 @@ def menu_principal():
         opcao = input("Escolha uma opção: ")
 
         if opcao == "1":
-            print("opcao 1")
+            adicionar_atividade()
         elif opcao == "2":
             print("opcao 2")
         elif opcao == "3":
