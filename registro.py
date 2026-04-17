@@ -13,6 +13,22 @@ def adicionar_atividade():
 
         print("Atividade foi adicionada")
 
+# visualizar todas atividades
+def visualizar_atividades():
+    try:
+        with open(NOME_ARQUIVO, "r") as arquivo:
+            atividades = arquivo.readlines()
+
+            if atividades:
+                dados = [atividade.strip() for atividade in atividades if atividade.strip()]
+
+                print(dados)
+
+            else:
+                print("Você não adicionou nenhuma atividade")
+
+    except FileNotFoundError:
+        print("Nenhum arquivo foi encontrado")
 def menu_principal():
     while True:
         print("=== Menu Principal ===")
@@ -27,7 +43,7 @@ def menu_principal():
         if opcao == "1":
             adicionar_atividade()
         elif opcao == "2":
-            print("opcao 2")
+            visualizar_atividades()
         elif opcao == "3":
             print("opcao 3")
         elif opcao == "4":
