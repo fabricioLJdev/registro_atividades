@@ -22,19 +22,42 @@ def visualizar_atividades():
             if atividades:
                 dados = [atividade.strip() for atividade in atividades if atividade.strip()]
 
-                print(dados)
+                for i, atividade in enumerate(dados, start=1):
+                    print(f"{i}. {atividade}")
+
 
             else:
                 print("Você não adicionou nenhuma atividade")
 
     except FileNotFoundError:
         print("Nenhum arquivo foi encontrado")
+
+# Visualizar atividades
+def visualizar_atividades():
+    try:
+        termo = input("Digite o termo para buscar: ")
+
+        with open(NOME_ARQUIVO, "r") as arquivo:
+            atividades = arquivo.readlines()
+
+        resultados = [atividade.strip() for atividade in atividades if termo.lower() in atividade.lower()]
+
+        if resultados:
+            print("=== Atividades Registradas ===")
+            for i, resultado in enumerate(resultados, start=1):
+                print(f"{i}. {resultado} \n")
+        else:
+            print(f"Nenhuma atividade encontrada para o termo {termo}")
+
+    except FileNotFoundError:
+        print("Nenhuma atividade registrada ainda")
+
 def menu_principal():
     while True:
         print("=== Menu Principal ===")
         print("1. Adicionar uma nova atividade")
         print("2. visualizar todas as atividades")
-        print("3. Buscar um atividade")
+        print("3. Buscar uma atividade")
         print("4. Excluir uma atividade")
         print("5. Sair")
 
@@ -45,7 +68,7 @@ def menu_principal():
         elif opcao == "2":
             visualizar_atividades()
         elif opcao == "3":
-            print("opcao 3")
+            visualizar_atividades()
         elif opcao == "4":
             print("opcao 4")
         elif opcao == "5":
