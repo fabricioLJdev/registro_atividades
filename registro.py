@@ -6,12 +6,11 @@ NOME_ARQUIVO = "atividade.txt"
 
 # adicionar atividade
 def adicionar_atividade():
-    atividade = input("Digite a atividade que deseja adicionar: ")
+    atividade = input("Digite a atividade que deseja salvar no arquivo: ")
 
     with open(NOME_ARQUIVO, "a") as arquivo:
         arquivo.write(atividade + "\n")
-
-        print("Atividade foi adicionada")
+    print("Atividade registrada com sucesso!")
 
 # visualizar todas atividades
 def visualizar_atividades():
@@ -20,11 +19,10 @@ def visualizar_atividades():
             atividades = arquivo.readlines()
 
             if atividades:
-                dados = [atividade.strip() for atividade in atividades if atividade.strip()]
 
-                for i, atividade in enumerate(dados, start=1):
+                print("=== Atividades Registradas ===")
+                for i, atividade in enumerate(atividades, start=1):
                     print(f"{i}. {atividade}")
-
 
             else:
                 print("Você não adicionou nenhuma atividade")
@@ -32,8 +30,8 @@ def visualizar_atividades():
     except FileNotFoundError:
         print("Nenhum arquivo foi encontrado")
 
-# Visualizar atividades
-def visualizar_atividades():
+# Buscar atividades
+def buscar_atividades():
     try:
         termo = input("Digite o termo para buscar: ")
 
@@ -44,13 +42,41 @@ def visualizar_atividades():
 
         if resultados:
             print("=== Atividades Registradas ===")
+            
             for i, resultado in enumerate(resultados, start=1):
-                print(f"{i}. {resultado} \n")
+                print(f"{i}. {resultado}")
+        
         else:
             print(f"Nenhuma atividade encontrada para o termo {termo}")
 
     except FileNotFoundError:
         print("Nenhuma atividade registrada ainda")
+
+def excluir_atividades():
+    visualizar_atividades()
+    try:
+        with open(NOME_ARQUIVO, "r") as arquivo:
+            atividades = arquivo.readlines()
+
+        if atividades:
+            indice = int(input("Digite o número da atividade que deseja excluir: "))
+
+            if 1 <= indice <= len(atividades):
+                atividade_excluida = atividades.pop(indice - 1) # metodo pop é passado o numero do indice
+                
+                with open(NOME_ARQUIVO, "w") as arquivo:
+                    arquivo.writelines(atividades)
+
+                print(f"Atividade {atividade_excluida.strip()} excluída com sucesso")
+
+            else:
+                print("Número inválido. Nenuma atividade foi excluída.")
+
+        else:
+            print("Nunhuma atividade encontrada")
+    except FileNotFoundError:
+        print("Nenhum arquivo foi encontrado")
+
 
 def menu_principal():
     while True:
@@ -68,9 +94,9 @@ def menu_principal():
         elif opcao == "2":
             visualizar_atividades()
         elif opcao == "3":
-            visualizar_atividades()
+            buscar_atividades()
         elif opcao == "4":
-            print("opcao 4")
+            excluir_atividades()
         elif opcao == "5":
             print("Saindo do programa. Até mais!")
             break
